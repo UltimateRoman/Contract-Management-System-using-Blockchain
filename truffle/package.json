@@ -1,0 +1,17 @@
+{
+  "name": "cmsb-smart-contracts",
+  "version": "1.0.0",
+  "description": "Smart contracts for Contract Management System Using Blockchain",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "truffle test"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.5.0"
+  }
+}

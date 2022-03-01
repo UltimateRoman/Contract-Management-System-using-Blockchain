@@ -4,21 +4,25 @@ pragma solidity ^0.8.2;
 contract ContractStages {
 
     enum ContractManagementStages {
-        Initiation,
-        PartiesApproved,
-        FinallyApproved,
-        Execution,
+        PartyApprovalPending,
+        FinalApprovalPending,
+        Validated,
         Expired,
         Rejected
     }
 
-    ContractManagementStages internal currentStage = ContractManagementStages.Initiation;
+    ContractManagementStages internal currentStage = ContractManagementStages.PartyApprovalPending;
 
-    function getStage() external view returns (uint) {
-        return uint(currentStage);
+    function _atStage(ContractManagementStages _stage) internal view {
+        require(currentStage == _stage, "Not in expected stage");
     }
 
-    function jumpStage(uint8 _offset) external {
-        currentStage = ContractManagementStages(uint(currentStage) + _offset);
+    function _jumpToNextStage() internal {
+        require(uint(currentStage) + 1 <= 2, "Invalid stage");
+        currentStage = ContractManagementStages(uint(currentStage) + 1);
+    }
+
+    function _goToRejected() internal {
+        currentStage = ContractManagementStages(4);
     }
 }

@@ -1,67 +1,39 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.2;
 
+import "@openzeppelin/contracts/proxy/Clones.sol";
 import "./interfaces/IContractInit.sol";
+import "./ContractController.sol";
 
 /**
- * @title Contract Factory
- * @dev Create & retrieve contracts
+ * @title CMSB Contract Factory
+ * @dev Create and view draft contracts
  */
 
 contract ContractFactory is IContractInit {
 
-    Contract[] draftContracts;
-    mapping(uint => address) public initiatingParty;
+    address public immutable baseContract;
 
-    event createdContract(uint);
-
-    //Modifier to check whether msg.sender is the initiating party of the contract
-    modifier onlyInitiator(uint _contractId) {
-        require(msg.sender == draftContracts[_contractId].initiatingParty, "Not the initiator");
-        _;
+    constructor() {
+        baseContract = address(new ContractController());
     }
 
-    //Modifier to check whether msg.sender is a party to the contract
-    modifier onlyParty(uint _contractId) {
-        bool isParty;
+    BaseContractData[] public contractsList;
 
-        if (initiatingParty[_contractId] == msg.sender) {
-            isParty = true;
-        }
-
-        for (uint i = 0; i < draftContracts[_contractId].parties.length; ++i) {
-            if (draftContracts[_contractId].parties[i] == msg.sender) {
-                isParty = true;
-            }
-        }
-        require(isParty, "Not a party to the contract");
-        _;
-    }
+    event createdNewDraftContract(uint);    
 
     function getContractsCount() external view returns (uint) {
-        return draftContracts.length;
-    }
-
-    function viewContract(uint _contractId) external view onlyParty(_contractId) returns (Contract memory) {
-        return draftContracts[_contractId];
+        return contractsList.length;
     }
 
     function initiateContract(
-        uint _amount, 
-        address[] calldata _parties, 
-        string memory _contractName, 
-        string memory _document
+        CompleteContractData calldata _contractData
     ) 
         external 
     {
-        Contract memory newContract = Contract(draftContracts.length, _amount, false, msg.sender, _parties, _contractName, _document);
-        draftContracts.push(newContract);
-        initiatingParty[draftContracts.length-1] = msg.sender;
-        emit createdContract(draftContracts.length-1);
-    }
-
-    function validateContract(uint _contractId) external payable onlyInitiator(_contractId) {
-        require(msg.value == draftContracts[_contractId].amount);
-        draftContracts[_contractId].isValid = true;
+        address newContract = Clones.clone(baseContract);
+        contractsList.push(BaseContractData(contractsList.length, newContract, msg.sender, _contractData.parties));
+        ContractController(newContract).initialize(_contractData);
+        emit createdNewDraftContract(contractsList.length-1);
     }
 }

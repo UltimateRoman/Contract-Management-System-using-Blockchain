@@ -8,8 +8,8 @@ import "./ContractStages.sol";
 contract ContractController is IContractInit, ContractStages, Initializable {
     CompleteContractData contractData;
 
-    mapping(address => bool) isPartyApproved;
-    mapping(address => uint) fundDistrbution;
+    mapping(address => bool) hasPartyApproved;
+    mapping(address => uint) fundDistribution;
 
     event contractInitialized(address contractAddress);
     event partyApproved(address party, address contractAddress);
@@ -55,7 +55,7 @@ contract ContractController is IContractInit, ContractStages, Initializable {
         contractData = _contractData;
         if (_contractData.isPayable) {
             for (uint i=0; i < _contractData.fundDistribution.length; i++) {
-                fundDistrbution[_contractData.parties[i]] = _contractData.fundDistribution[i];
+                fundDistribution[_contractData.parties[i]] = _contractData.fundDistribution[i];
             }
         }
         emit contractInitialized(address(this));

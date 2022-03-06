@@ -1,12 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.2;
 
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
 import "./interfaces/IContractInit.sol";
 import "./ContractStages.sol";
 
 contract ContractController is IContractInit, ContractStages, Initializable {
     CompleteContractData contractData;
+    address daiTokenAddress;
 
     mapping(address => bool) hasPartyApproved;
     mapping(address => uint) fundDistribution;
@@ -47,12 +49,14 @@ contract ContractController is IContractInit, ContractStages, Initializable {
     }
 
     function initialize(
-        CompleteContractData calldata _contractData
+        CompleteContractData calldata _contractData,
+        address _daiTokenAddress
     )
         external 
         initializer
     {
         contractData = _contractData;
+        daiTokenAddress = _daiTokenAddress;
         if (_contractData.isPayable) {
             for (uint i=0; i < _contractData.fundDistribution.length; i++) {
                 fundDistribution[_contractData.parties[i]] = _contractData.fundDistribution[i];

@@ -13,14 +13,31 @@ import "./ContractController.sol";
 contract ContractFactory is IContractInit {
 
     address public immutable baseContract;
+    address public daiTokenAddress;
 
-    constructor() {
+    constructor(address _daiTokenAddress) {
+        daiTokenAddress = _daiTokenAddress;
         baseContract = address(new ContractController());
     }
 
     BaseContractData[] public contractsList;
 
     event createdNewDraftContract(uint);    
+
+    function isPartyOf(address _partyAddress, uint _contractId) internal view returns (bool) {
+        bool isParty;
+        if (contractsList[_contractId].initiatingParty == _partyAddress) {
+            isParty = true;
+        } else {
+            for (uint i=0; i < contractsList[_contractId].parties.length; i++) {
+                if (contractsList[_contractId].parties[i] == _partyAddress) {
+                    isParty = true;
+                    break;
+                }
+            }
+        }
+        return isParty;
+    }
 
     function getContractsCount() external view returns (uint) {
         return contractsList.length;
@@ -31,9 +48,13 @@ contract ContractFactory is IContractInit {
     ) 
         external 
     {
+        address[] memory partyAddresses = new address[](_contractData.parties.length);
+        for (uint8 i=0; i<partyAddresses.length; ++i) {
+            partyAddresses[i] = _contractData.parties[i];
+        }
         address newContract = Clones.clone(baseContract);
-        contractsList.push(BaseContractData(contractsList.length, newContract, msg.sender, _contractData.parties));
-        ContractController(newContract).initialize(_contractData);
+        contractsList.push(BaseContractData(contractsList.length, newContract, msg.sender, partyAddresses));
+        ContractController(newContract).initialize(_contractData, daiTokenAddress);
         emit createdNewDraftContract(contractsList.length-1);
     }
 }

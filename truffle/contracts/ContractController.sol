@@ -9,6 +9,7 @@ import "./ContractStages.sol";
 contract ContractController is IContractInit, ContractStages, Initializable {
     CompleteContractData contractData;
     address daiTokenAddress;
+    bool isFinalApprovalCompleted;
 
     mapping(address => bool) hasPartyApproved;
     mapping(address => uint) fundDistribution;
@@ -48,6 +49,25 @@ contract ContractController is IContractInit, ContractStages, Initializable {
         return contractData;
     }
 
+    function allPartiesApproved() private view returns(bool){
+        bool approved = true ;
+        for(uint i=0;i<contractData.parties.length;i++){
+            if(hasPartyApproved[contractData.parties[i]]==false){
+                approved = false;
+                break;
+            }
+            
+        }
+        return approved;
+    }
+    function makePayment() private {
+         for(uint i=0;i<contractData.parties.length;i++){
+             IERC20(daiTokenAddress).transfer(
+                 contractData.parties[i],
+                 fundDistribution[contractData.parties[i]]
+             );
+         }
+    }
     function initialize(
         CompleteContractData calldata _contractData,
         address _daiTokenAddress
@@ -64,4 +84,13 @@ contract ContractController is IContractInit, ContractStages, Initializable {
         }
         emit contractInitialized(address(this));
     }
+    function finalApproval() external onlyInitiator{
+        require(allPartiesApproved()==true,"All parties have not approved");
+        isFinalApprovalCompleted=true;
+        if(contractData.isPayable==true){
+            makePayment();
+        }
+    }
+    
+
 }

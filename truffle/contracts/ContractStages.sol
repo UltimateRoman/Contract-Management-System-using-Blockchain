@@ -17,9 +17,13 @@ contract ContractStages {
         require(currentStage == _stage, "Not in expected stage");
     }
 
-    function _jumpToNextStage() internal {
+    function _nextStage() internal {
         require(uint(currentStage) + 1 <= 2, "Invalid stage");
         currentStage = ContractManagementStages(uint(currentStage) + 1);
+    }
+
+    function _jumpToStage(ContractManagementStages _stage) internal {
+        currentStage = _stage;
     }
 
     function _goToRejected() internal {

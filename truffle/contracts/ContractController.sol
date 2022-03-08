@@ -41,6 +41,17 @@ contract ContractController is IContractInit, ContractStages, Initializable {
         _;
     }
 
+    function allPartiesApproved() private view returns(bool) {
+        bool approved = true ;
+        for(uint i=0;i<contractData.parties.length;i++){
+            if(hasPartyApproved[contractData.parties[i]]==false){
+                approved = false;
+                break;
+            }            
+        }
+        return approved;
+    }
+
     function getContractStage() external view onlyParty returns (uint) {
         return uint(currentStage);
     }
@@ -49,25 +60,15 @@ contract ContractController is IContractInit, ContractStages, Initializable {
         return contractData;
     }
 
-    function allPartiesApproved() private view returns(bool){
-        bool approved = true ;
-        for(uint i=0;i<contractData.parties.length;i++){
-            if(hasPartyApproved[contractData.parties[i]]==false){
-                approved = false;
-                break;
-            }
-            
-        }
-        return approved;
-    }
     function makePayment() private {
-         for(uint i=0;i<contractData.parties.length;i++){
-             IERC20(daiTokenAddress).transfer(
-                 contractData.parties[i],
-                 fundDistribution[contractData.parties[i]]
-             );
-         }
+        for (uint i=0; i < contractData.parties.length; i++) {
+            IERC20(daiTokenAddress).transfer(
+                contractData.parties[i],
+                fundDistribution[contractData.parties[i]]
+            );
+        }
     }
+
     function initialize(
         CompleteContractData calldata _contractData,
         address _daiTokenAddress
@@ -82,15 +83,17 @@ contract ContractController is IContractInit, ContractStages, Initializable {
                 fundDistribution[_contractData.parties[i]] = _contractData.fundDistribution[i];
             }
         }
+        _nextStage();
         emit contractInitialized(address(this));
     }
-    function finalApproval() external onlyInitiator{
-        require(allPartiesApproved()==true,"All parties have not approved");
-        isFinalApprovalCompleted=true;
-        if(contractData.isPayable==true){
+
+    function finalApproval() external onlyInitiator {
+        _atStage(ContractManagementStages.FinalApprovalPending);
+        require(allPartiesApproved() == true, "All parties have not approved");
+        isFinalApprovalCompleted = true;
+        if (contractData.isPayable == true) {
             makePayment();
         }
-    }
-    
-
+        _nextStage();
+    } 
 }

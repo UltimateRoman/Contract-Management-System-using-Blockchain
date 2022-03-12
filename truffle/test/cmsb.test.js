@@ -16,7 +16,7 @@ contract("CMSB Contracts Test", (accounts) => {
     });
 
     describe("Smart contract deployment", async () => {
-        it("contract deploys succesfully", async () => {
+        it("Factory contract deploys succesfully", async () => {
             const address = await contractFactory.address;
             assert.isDefined(address);    
             assert.notEqual(address, "0x0000000000000000000000000000000000000000");    
@@ -37,8 +37,8 @@ contract("CMSB Contracts Test", (accounts) => {
                 parties: [accounts[2], accounts[3]],
                 contractName: "Sample contract",
                 document:"https://sampleuri.ipfs.io"
-            }
-
+            };
+            
             await contractFactory.initiateContract(contractData, {from: accounts[1]});
         });
 
@@ -57,8 +57,28 @@ contract("CMSB Contracts Test", (accounts) => {
             assert.equal(completeContractData.expiryTime, 2000000);
             assert.equal(completeContractData.initiatingParty, accounts[1]);
             assert.equal(completeContractData.parties[0], accounts[2]);
+            assert.equal(completeContractData.parties[1], accounts[3]);
             assert.equal(completeContractData.contractName, 'Sample contract');
             assert.equal(completeContractData.document, 'https://sampleuri.ipfs.io');
+        });
+
+        it("list of contracts of a user can be retrieved", async () => {
+            let contractData = {
+                isPayable: false,
+                expiryTime: 2000000,
+                fundDistribution: [0, 0, 0],
+                initiatingParty: accounts[2],
+                parties: [accounts[4], accounts[5], accounts[6]],
+                contractName: "Sample contract 2",
+                document:"https://sampleuri.ipfs.io"
+            };
+            
+            await contractFactory.initiateContract(contractData, {from: accounts[2]});
+            const myContracts2 = await contractFactory.getMyContracts({from: accounts[2]});
+            assert.equal(myContracts2.length, 2);
+
+            const myContracts3 = await contractFactory.getMyContracts({from: accounts[3]});
+            assert.equal(myContracts3.length, 1);
         });
     });
 });

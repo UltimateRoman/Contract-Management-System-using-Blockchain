@@ -56,17 +56,19 @@ contract ContractController is IContractInit, ContractStages, Initializable {
         return uint(currentStage);
     }
 
-    function viewContractData() external view onlyParty returns (CompleteContractData memory) {
+    function viewContractData() external view returns (CompleteContractData memory) {
         return contractData;
     }
 
     function makePayment() private {
         for (uint i=0; i < contractData.parties.length; i++) {
-            IERC20(daiTokenAddress).transfer(
+            bool success = IERC20(daiTokenAddress).transfer(
                 contractData.parties[i],
                 fundDistribution[contractData.parties[i]]
             );
+            require(success, "DAI transfer failed");
         }
+        emit paymentExecuted(address(this));
     }
 
     function initialize(
@@ -95,5 +97,6 @@ contract ContractController is IContractInit, ContractStages, Initializable {
             makePayment();
         }
         _nextStage();
+        emit finalApprovalCompleted(address(this));
     } 
 }

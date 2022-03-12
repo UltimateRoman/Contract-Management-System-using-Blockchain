@@ -1,29 +1,29 @@
 {
   "contractName": "ContractStages",
   "abi": [],
-  "metadata": "{\"compiler\":{\"version\":\"0.8.2+commit.661d1103\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/ContractStages.sol\":\"ContractStages\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/ContractStages.sol\":{\"keccak256\":\"0x175dbd8ac4d40429caf6fbce0e042e0e35e5832990e836722c91ef415627716d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://1727d4f4f7ac6ad223116a1e0685665a300aef09cbb6c01a2cd62476f567a0c0\",\"dweb:/ipfs/Qmak8UsmpuhoSz4PaqPNAt6N9tshHrFb1YjkcL3f1bZRtN\"]}},\"version\":1}",
-  "bytecode": "0x608060405260008060006101000a81548160ff02191690836004811115604e577f4e487b7100000000000000000000000000000000000000000000000000000000600052602160045260246000fd5b0217905550348015605e57600080fd5b50603f80606c6000396000f3fe6080604052600080fdfea2646970667358221220d387f543dbe02cdb945c111de3b76fb6b51265979a31a617bf35f5c57b4cf6d064736f6c63430008020033",
-  "deployedBytecode": "0x6080604052600080fdfea2646970667358221220d387f543dbe02cdb945c111de3b76fb6b51265979a31a617bf35f5c57b4cf6d064736f6c63430008020033",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.2+commit.661d1103\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/ContractStages.sol\":\"ContractStages\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/ContractStages.sol\":{\"keccak256\":\"0xb9c7e20159d5d8f15fb9b87fd386df981e4f078311514a5b091b5073d5ca2ec2\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://4b242351b545b902fac6fb1b0a10055c83f9719af20e0ab4c5404dd1f9242063\",\"dweb:/ipfs/QmeRgaBshi19QrPngt9dK93LnjxVZXRA6mzLBDjhwKrvCt\"]}},\"version\":1}",
+  "bytecode": "0x608060405260008060006101000a81548160ff02191690836004811115604e577f4e487b7100000000000000000000000000000000000000000000000000000000600052602160045260246000fd5b0217905550348015605e57600080fd5b50603f80606c6000396000f3fe6080604052600080fdfea2646970667358221220072d1cafa861a65888bfdb70810dab1b8e9e013d88740085dbcec5cd5cc9a00f64736f6c63430008020033",
+  "deployedBytecode": "0x6080604052600080fdfea2646970667358221220072d1cafa861a65888bfdb70810dab1b8e9e013d88740085dbcec5cd5cc9a00f64736f6c63430008020033",
   "immutableReferences": {},
   "generatedSources": [],
   "deployedGeneratedSources": [],
-  "sourceMap": "57:713:10:-:0;;;293:45;244:94;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;57:713;;;;;;;;;;;;;;;;",
-  "deployedSourceMap": "57:713:10:-:0;;;;;",
-  "source": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.2;\n\ncontract ContractStages {\n\n    enum ContractManagementStages {\n        PartyApprovalPending,\n        FinalApprovalPending,\n        Validated,\n        Expired,\n        Rejected\n    }\n\n    ContractManagementStages internal currentStage = ContractManagementStages.PartyApprovalPending;\n\n    function _atStage(ContractManagementStages _stage) internal view {\n        require(currentStage == _stage, \"Not in expected stage\");\n    }\n\n    function _jumpToNextStage() internal {\n        require(uint(currentStage) + 1 <= 2, \"Invalid stage\");\n        currentStage = ContractManagementStages(uint(currentStage) + 1);\n    }\n\n    function _goToRejected() internal {\n        currentStage = ContractManagementStages(4);\n    }\n}",
-  "sourcePath": "/Users/godsonprakasia/Desktop/Contract-Management-System-using-Blockchain/truffle/contracts/ContractStages.sol",
+  "sourceMap": "60:843:10:-:0;;;306:45;257:94;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;60:843;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "60:843:10:-:0;;;;;",
+  "source": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.2;\r\n\r\ncontract ContractStages {\r\n\r\n    enum ContractManagementStages {\r\n        PartyApprovalPending,\r\n        FinalApprovalPending,\r\n        Validated,\r\n        Expired,\r\n        Rejected\r\n    }\r\n\r\n    ContractManagementStages internal currentStage = ContractManagementStages.PartyApprovalPending;\r\n\r\n    function _atStage(ContractManagementStages _stage) internal view {\r\n        require(currentStage == _stage, \"Not in expected stage\");\r\n    }\r\n\r\n    function _nextStage() internal {\r\n        require(uint(currentStage) + 1 <= 2, \"Invalid stage\");\r\n        currentStage = ContractManagementStages(uint(currentStage) + 1);\r\n    }\r\n\r\n    function _jumpToStage(ContractManagementStages _stage) internal {\r\n        currentStage = _stage;\r\n    }\r\n\r\n    function _goToRejected() internal {\r\n        currentStage = ContractManagementStages(4);\r\n    }\r\n}",
+  "sourcePath": "E:\\SOE CUSAT\\S6\\Mini-project\\Code\\CMSB\\truffle\\contracts\\ContractStages.sol",
   "ast": {
     "absolutePath": "project:/contracts/ContractStages.sol",
     "exportedSymbols": {
       "ContractStages": [
-        1816
+        1970
       ]
     },
-    "id": 1817,
+    "id": 1971,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1753,
+        "id": 1896,
         "literals": [
           "solidity",
           "^",
@@ -31,7 +31,7 @@
           ".2"
         ],
         "nodeType": "PragmaDirective",
-        "src": "32:23:10"
+        "src": "33:23:10"
       },
       {
         "abstract": false,
@@ -39,115 +39,115 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": true,
-        "id": 1816,
+        "id": 1970,
         "linearizedBaseContracts": [
-          1816
+          1970
         ],
         "name": "ContractStages",
-        "nameLocation": "66:14:10",
+        "nameLocation": "69:14:10",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "ContractStages.ContractManagementStages",
-            "id": 1759,
+            "id": 1902,
             "members": [
               {
-                "id": 1754,
+                "id": 1897,
                 "name": "PartyApprovalPending",
-                "nameLocation": "128:20:10",
+                "nameLocation": "134:20:10",
                 "nodeType": "EnumValue",
-                "src": "128:20:10"
+                "src": "134:20:10"
               },
               {
-                "id": 1755,
+                "id": 1898,
                 "name": "FinalApprovalPending",
-                "nameLocation": "158:20:10",
+                "nameLocation": "165:20:10",
                 "nodeType": "EnumValue",
-                "src": "158:20:10"
+                "src": "165:20:10"
               },
               {
-                "id": 1756,
+                "id": 1899,
                 "name": "Validated",
-                "nameLocation": "188:9:10",
+                "nameLocation": "196:9:10",
                 "nodeType": "EnumValue",
-                "src": "188:9:10"
+                "src": "196:9:10"
               },
               {
-                "id": 1757,
+                "id": 1900,
                 "name": "Expired",
-                "nameLocation": "207:7:10",
+                "nameLocation": "216:7:10",
                 "nodeType": "EnumValue",
-                "src": "207:7:10"
+                "src": "216:7:10"
               },
               {
-                "id": 1758,
+                "id": 1901,
                 "name": "Rejected",
-                "nameLocation": "224:8:10",
+                "nameLocation": "234:8:10",
                 "nodeType": "EnumValue",
-                "src": "224:8:10"
+                "src": "234:8:10"
               }
             ],
             "name": "ContractManagementStages",
-            "nameLocation": "93:24:10",
+            "nameLocation": "98:24:10",
             "nodeType": "EnumDefinition",
-            "src": "88:150:10"
+            "src": "93:156:10"
           },
           {
             "constant": false,
-            "id": 1764,
+            "id": 1907,
             "mutability": "mutable",
             "name": "currentStage",
-            "nameLocation": "278:12:10",
+            "nameLocation": "291:12:10",
             "nodeType": "VariableDeclaration",
-            "scope": 1816,
-            "src": "244:94:10",
+            "scope": 1970,
+            "src": "257:94:10",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+              "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
               "typeString": "enum ContractStages.ContractManagementStages"
             },
             "typeName": {
-              "id": 1761,
+              "id": 1904,
               "nodeType": "UserDefinedTypeName",
               "pathNode": {
-                "id": 1760,
+                "id": 1903,
                 "name": "ContractManagementStages",
                 "nodeType": "IdentifierPath",
-                "referencedDeclaration": 1759,
-                "src": "244:24:10"
+                "referencedDeclaration": 1902,
+                "src": "257:24:10"
               },
-              "referencedDeclaration": 1759,
-              "src": "244:24:10",
+              "referencedDeclaration": 1902,
+              "src": "257:24:10",
               "typeDescriptions": {
-                "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                 "typeString": "enum ContractStages.ContractManagementStages"
               }
             },
             "value": {
               "expression": {
-                "id": 1762,
+                "id": 1905,
                 "name": "ContractManagementStages",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 1759,
-                "src": "293:24:10",
+                "referencedDeclaration": 1902,
+                "src": "306:24:10",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_type$_t_enum$_ContractManagementStages_$1759_$",
+                  "typeIdentifier": "t_type$_t_enum$_ContractManagementStages_$1902_$",
                   "typeString": "type(enum ContractStages.ContractManagementStages)"
                 }
               },
-              "id": 1763,
+              "id": 1906,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
               "lValueRequested": false,
               "memberName": "PartyApprovalPending",
               "nodeType": "MemberAccess",
-              "referencedDeclaration": 1754,
-              "src": "293:45:10",
+              "referencedDeclaration": 1897,
+              "src": "306:45:10",
               "typeDescriptions": {
-                "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                 "typeString": "enum ContractStages.ContractManagementStages"
               }
             },
@@ -155,50 +155,50 @@
           },
           {
             "body": {
-              "id": 1777,
+              "id": 1920,
               "nodeType": "Block",
-              "src": "410:73:10",
+              "src": "425:75:10",
               "statements": [
                 {
                   "expression": {
                     "arguments": [
                       {
                         "commonType": {
-                          "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                          "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                           "typeString": "enum ContractStages.ContractManagementStages"
                         },
-                        "id": 1773,
+                        "id": 1916,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
-                          "id": 1771,
+                          "id": 1914,
                           "name": "currentStage",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 1764,
-                          "src": "428:12:10",
+                          "referencedDeclaration": 1907,
+                          "src": "444:12:10",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                            "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                             "typeString": "enum ContractStages.ContractManagementStages"
                           }
                         },
                         "nodeType": "BinaryOperation",
                         "operator": "==",
                         "rightExpression": {
-                          "id": 1772,
+                          "id": 1915,
                           "name": "_stage",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 1767,
-                          "src": "444:6:10",
+                          "referencedDeclaration": 1910,
+                          "src": "460:6:10",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                            "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                             "typeString": "enum ContractStages.ContractManagementStages"
                           }
                         },
-                        "src": "428:22:10",
+                        "src": "444:22:10",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
@@ -206,14 +206,14 @@
                       },
                       {
                         "hexValue": "4e6f7420696e206578706563746564207374616765",
-                        "id": 1774,
+                        "id": 1917,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "string",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "452:23:10",
+                        "src": "468:23:10",
                         "typeDescriptions": {
                           "typeIdentifier": "t_stringliteral_b694881b59e12a5f97df05318531721af0246c01b8e77c9a0cf2519e627107e8",
                           "typeString": "literal_string \"Not in expected stage\""
@@ -232,7 +232,7 @@
                           "typeString": "literal_string \"Not in expected stage\""
                         }
                       ],
-                      "id": 1770,
+                      "id": 1913,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -240,13 +240,13 @@
                         4294967278
                       ],
                       "referencedDeclaration": 4294967278,
-                      "src": "420:7:10",
+                      "src": "436:7:10",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 1775,
+                    "id": 1918,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -254,84 +254,84 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "420:56:10",
+                    "src": "436:56:10",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 1776,
+                  "id": 1919,
                   "nodeType": "ExpressionStatement",
-                  "src": "420:56:10"
+                  "src": "436:56:10"
                 }
               ]
             },
-            "id": 1778,
+            "id": 1921,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "_atStage",
-            "nameLocation": "354:8:10",
+            "nameLocation": "369:8:10",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1768,
+              "id": 1911,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1767,
+                  "id": 1910,
                   "mutability": "mutable",
                   "name": "_stage",
-                  "nameLocation": "388:6:10",
+                  "nameLocation": "403:6:10",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1778,
-                  "src": "363:31:10",
+                  "scope": 1921,
+                  "src": "378:31:10",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                    "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                     "typeString": "enum ContractStages.ContractManagementStages"
                   },
                   "typeName": {
-                    "id": 1766,
+                    "id": 1909,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 1765,
+                      "id": 1908,
                       "name": "ContractManagementStages",
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 1759,
-                      "src": "363:24:10"
+                      "referencedDeclaration": 1902,
+                      "src": "378:24:10"
                     },
-                    "referencedDeclaration": 1759,
-                    "src": "363:24:10",
+                    "referencedDeclaration": 1902,
+                    "src": "378:24:10",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                      "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                       "typeString": "enum ContractStages.ContractManagementStages"
                     }
                   },
                   "visibility": "internal"
                 }
               ],
-              "src": "362:33:10"
+              "src": "377:33:10"
             },
             "returnParameters": {
-              "id": 1769,
+              "id": 1912,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "410:0:10"
+              "src": "425:0:10"
             },
-            "scope": 1816,
-            "src": "345:138:10",
+            "scope": 1970,
+            "src": "360:140:10",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "internal"
           },
           {
             "body": {
-              "id": 1804,
+              "id": 1947,
               "nodeType": "Block",
-              "src": "526:143:10",
+              "src": "539:146:10",
               "statements": [
                 {
                   "expression": {
@@ -341,7 +341,7 @@
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
                         },
-                        "id": 1789,
+                        "id": 1932,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -351,7 +351,7 @@
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
                           },
-                          "id": 1787,
+                          "id": 1930,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -359,14 +359,14 @@
                           "leftExpression": {
                             "arguments": [
                               {
-                                "id": 1784,
+                                "id": 1927,
                                 "name": "currentStage",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 1764,
-                                "src": "549:12:10",
+                                "referencedDeclaration": 1907,
+                                "src": "563:12:10",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                                  "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                                   "typeString": "enum ContractStages.ContractManagementStages"
                                 }
                               }
@@ -374,30 +374,30 @@
                             "expression": {
                               "argumentTypes": [
                                 {
-                                  "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                                  "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                                   "typeString": "enum ContractStages.ContractManagementStages"
                                 }
                               ],
-                              "id": 1783,
+                              "id": 1926,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
                               "lValueRequested": false,
                               "nodeType": "ElementaryTypeNameExpression",
-                              "src": "544:4:10",
+                              "src": "558:4:10",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_type$_t_uint256_$",
                                 "typeString": "type(uint256)"
                               },
                               "typeName": {
-                                "id": 1782,
+                                "id": 1925,
                                 "name": "uint",
                                 "nodeType": "ElementaryTypeName",
-                                "src": "544:4:10",
+                                "src": "558:4:10",
                                 "typeDescriptions": {}
                               }
                             },
-                            "id": 1785,
+                            "id": 1928,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -405,7 +405,7 @@
                             "lValueRequested": false,
                             "names": [],
                             "nodeType": "FunctionCall",
-                            "src": "544:18:10",
+                            "src": "558:18:10",
                             "tryCall": false,
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -416,21 +416,21 @@
                           "operator": "+",
                           "rightExpression": {
                             "hexValue": "31",
-                            "id": 1786,
+                            "id": 1929,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
                             "kind": "number",
                             "lValueRequested": false,
                             "nodeType": "Literal",
-                            "src": "565:1:10",
+                            "src": "579:1:10",
                             "typeDescriptions": {
                               "typeIdentifier": "t_rational_1_by_1",
                               "typeString": "int_const 1"
                             },
                             "value": "1"
                           },
-                          "src": "544:22:10",
+                          "src": "558:22:10",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
@@ -440,21 +440,21 @@
                         "operator": "<=",
                         "rightExpression": {
                           "hexValue": "32",
-                          "id": 1788,
+                          "id": 1931,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
                           "kind": "number",
                           "lValueRequested": false,
                           "nodeType": "Literal",
-                          "src": "570:1:10",
+                          "src": "584:1:10",
                           "typeDescriptions": {
                             "typeIdentifier": "t_rational_2_by_1",
                             "typeString": "int_const 2"
                           },
                           "value": "2"
                         },
-                        "src": "544:27:10",
+                        "src": "558:27:10",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
@@ -462,14 +462,14 @@
                       },
                       {
                         "hexValue": "496e76616c6964207374616765",
-                        "id": 1790,
+                        "id": 1933,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "string",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "573:15:10",
+                        "src": "587:15:10",
                         "typeDescriptions": {
                           "typeIdentifier": "t_stringliteral_01e84c248d5e8ad5c7056b93377de2b7a705dbd51681b488c1c55d0776e7be7b",
                           "typeString": "literal_string \"Invalid stage\""
@@ -488,7 +488,7 @@
                           "typeString": "literal_string \"Invalid stage\""
                         }
                       ],
-                      "id": 1781,
+                      "id": 1924,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -496,13 +496,13 @@
                         4294967278
                       ],
                       "referencedDeclaration": 4294967278,
-                      "src": "536:7:10",
+                      "src": "550:7:10",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 1791,
+                    "id": 1934,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -510,33 +510,33 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "536:53:10",
+                    "src": "550:53:10",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 1792,
+                  "id": 1935,
                   "nodeType": "ExpressionStatement",
-                  "src": "536:53:10"
+                  "src": "550:53:10"
                 },
                 {
                   "expression": {
-                    "id": 1802,
+                    "id": 1945,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 1793,
+                      "id": 1936,
                       "name": "currentStage",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1764,
-                      "src": "599:12:10",
+                      "referencedDeclaration": 1907,
+                      "src": "614:12:10",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                        "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                         "typeString": "enum ContractStages.ContractManagementStages"
                       }
                     },
@@ -549,7 +549,7 @@
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
                           },
-                          "id": 1800,
+                          "id": 1943,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -557,14 +557,14 @@
                           "leftExpression": {
                             "arguments": [
                               {
-                                "id": 1797,
+                                "id": 1940,
                                 "name": "currentStage",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 1764,
-                                "src": "644:12:10",
+                                "referencedDeclaration": 1907,
+                                "src": "659:12:10",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                                  "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                                   "typeString": "enum ContractStages.ContractManagementStages"
                                 }
                               }
@@ -572,30 +572,30 @@
                             "expression": {
                               "argumentTypes": [
                                 {
-                                  "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                                  "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                                   "typeString": "enum ContractStages.ContractManagementStages"
                                 }
                               ],
-                              "id": 1796,
+                              "id": 1939,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
                               "lValueRequested": false,
                               "nodeType": "ElementaryTypeNameExpression",
-                              "src": "639:4:10",
+                              "src": "654:4:10",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_type$_t_uint256_$",
                                 "typeString": "type(uint256)"
                               },
                               "typeName": {
-                                "id": 1795,
+                                "id": 1938,
                                 "name": "uint",
                                 "nodeType": "ElementaryTypeName",
-                                "src": "639:4:10",
+                                "src": "654:4:10",
                                 "typeDescriptions": {}
                               }
                             },
-                            "id": 1798,
+                            "id": 1941,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -603,7 +603,7 @@
                             "lValueRequested": false,
                             "names": [],
                             "nodeType": "FunctionCall",
-                            "src": "639:18:10",
+                            "src": "654:18:10",
                             "tryCall": false,
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -614,21 +614,21 @@
                           "operator": "+",
                           "rightExpression": {
                             "hexValue": "31",
-                            "id": 1799,
+                            "id": 1942,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
                             "kind": "number",
                             "lValueRequested": false,
                             "nodeType": "Literal",
-                            "src": "660:1:10",
+                            "src": "675:1:10",
                             "typeDescriptions": {
                               "typeIdentifier": "t_rational_1_by_1",
                               "typeString": "int_const 1"
                             },
                             "value": "1"
                           },
-                          "src": "639:22:10",
+                          "src": "654:22:10",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
@@ -642,18 +642,18 @@
                             "typeString": "uint256"
                           }
                         ],
-                        "id": 1794,
+                        "id": 1937,
                         "name": "ContractManagementStages",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1759,
-                        "src": "614:24:10",
+                        "referencedDeclaration": 1902,
+                        "src": "629:24:10",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_enum$_ContractManagementStages_$1759_$",
+                          "typeIdentifier": "t_type$_t_enum$_ContractManagementStages_$1902_$",
                           "typeString": "type(enum ContractStages.ContractManagementStages)"
                         }
                       },
-                      "id": 1801,
+                      "id": 1944,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -661,72 +661,183 @@
                       "lValueRequested": false,
                       "names": [],
                       "nodeType": "FunctionCall",
-                      "src": "614:48:10",
+                      "src": "629:48:10",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                        "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                         "typeString": "enum ContractStages.ContractManagementStages"
                       }
                     },
-                    "src": "599:63:10",
+                    "src": "614:63:10",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                      "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                       "typeString": "enum ContractStages.ContractManagementStages"
                     }
                   },
-                  "id": 1803,
+                  "id": 1946,
                   "nodeType": "ExpressionStatement",
-                  "src": "599:63:10"
+                  "src": "614:63:10"
                 }
               ]
             },
-            "id": 1805,
+            "id": 1948,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
-            "name": "_jumpToNextStage",
-            "nameLocation": "498:16:10",
+            "name": "_nextStage",
+            "nameLocation": "517:10:10",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1779,
+              "id": 1922,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "514:2:10"
+              "src": "527:2:10"
             },
             "returnParameters": {
-              "id": 1780,
+              "id": 1923,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "526:0:10"
+              "src": "539:0:10"
             },
-            "scope": 1816,
-            "src": "489:180:10",
+            "scope": 1970,
+            "src": "508:177:10",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "internal"
           },
           {
             "body": {
-              "id": 1814,
+              "id": 1958,
               "nodeType": "Block",
-              "src": "709:59:10",
+              "src": "757:40:10",
               "statements": [
                 {
                   "expression": {
-                    "id": 1812,
+                    "id": 1956,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 1808,
+                      "id": 1954,
                       "name": "currentStage",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1764,
-                      "src": "719:12:10",
+                      "referencedDeclaration": 1907,
+                      "src": "768:12:10",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                        "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
+                        "typeString": "enum ContractStages.ContractManagementStages"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 1955,
+                      "name": "_stage",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 1951,
+                      "src": "783:6:10",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
+                        "typeString": "enum ContractStages.ContractManagementStages"
+                      }
+                    },
+                    "src": "768:21:10",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
+                      "typeString": "enum ContractStages.ContractManagementStages"
+                    }
+                  },
+                  "id": 1957,
+                  "nodeType": "ExpressionStatement",
+                  "src": "768:21:10"
+                }
+              ]
+            },
+            "id": 1959,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "_jumpToStage",
+            "nameLocation": "702:12:10",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1952,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1951,
+                  "mutability": "mutable",
+                  "name": "_stage",
+                  "nameLocation": "740:6:10",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1959,
+                  "src": "715:31:10",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
+                    "typeString": "enum ContractStages.ContractManagementStages"
+                  },
+                  "typeName": {
+                    "id": 1950,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 1949,
+                      "name": "ContractManagementStages",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 1902,
+                      "src": "715:24:10"
+                    },
+                    "referencedDeclaration": 1902,
+                    "src": "715:24:10",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
+                      "typeString": "enum ContractStages.ContractManagementStages"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "714:33:10"
+            },
+            "returnParameters": {
+              "id": 1953,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "757:0:10"
+            },
+            "scope": 1970,
+            "src": "693:104:10",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 1968,
+              "nodeType": "Block",
+              "src": "839:61:10",
+              "statements": [
+                {
+                  "expression": {
+                    "id": 1966,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 1962,
+                      "name": "currentStage",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 1907,
+                      "src": "850:12:10",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                         "typeString": "enum ContractStages.ContractManagementStages"
                       }
                     },
@@ -736,14 +847,14 @@
                       "arguments": [
                         {
                           "hexValue": "34",
-                          "id": 1810,
+                          "id": 1964,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
                           "kind": "number",
                           "lValueRequested": false,
                           "nodeType": "Literal",
-                          "src": "759:1:10",
+                          "src": "890:1:10",
                           "typeDescriptions": {
                             "typeIdentifier": "t_rational_4_by_1",
                             "typeString": "int_const 4"
@@ -758,18 +869,18 @@
                             "typeString": "int_const 4"
                           }
                         ],
-                        "id": 1809,
+                        "id": 1963,
                         "name": "ContractManagementStages",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1759,
-                        "src": "734:24:10",
+                        "referencedDeclaration": 1902,
+                        "src": "865:24:10",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_enum$_ContractManagementStages_$1759_$",
+                          "typeIdentifier": "t_type$_t_enum$_ContractManagementStages_$1902_$",
                           "typeString": "type(enum ContractStages.ContractManagementStages)"
                         }
                       },
-                      "id": 1811,
+                      "id": 1965,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -777,70 +888,70 @@
                       "lValueRequested": false,
                       "names": [],
                       "nodeType": "FunctionCall",
-                      "src": "734:27:10",
+                      "src": "865:27:10",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                        "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                         "typeString": "enum ContractStages.ContractManagementStages"
                       }
                     },
-                    "src": "719:42:10",
+                    "src": "850:42:10",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                      "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                       "typeString": "enum ContractStages.ContractManagementStages"
                     }
                   },
-                  "id": 1813,
+                  "id": 1967,
                   "nodeType": "ExpressionStatement",
-                  "src": "719:42:10"
+                  "src": "850:42:10"
                 }
               ]
             },
-            "id": 1815,
+            "id": 1969,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "_goToRejected",
-            "nameLocation": "684:13:10",
+            "nameLocation": "814:13:10",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1806,
+              "id": 1960,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "697:2:10"
+              "src": "827:2:10"
             },
             "returnParameters": {
-              "id": 1807,
+              "id": 1961,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "709:0:10"
+              "src": "839:0:10"
             },
-            "scope": 1816,
-            "src": "675:93:10",
+            "scope": 1970,
+            "src": "805:95:10",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "internal"
           }
         ],
-        "scope": 1817,
-        "src": "57:713:10"
+        "scope": 1971,
+        "src": "60:843:10"
       }
     ],
-    "src": "32:738:10"
+    "src": "33:870:10"
   },
   "legacyAST": {
     "absolutePath": "project:/contracts/ContractStages.sol",
     "exportedSymbols": {
       "ContractStages": [
-        1816
+        1970
       ]
     },
-    "id": 1817,
+    "id": 1971,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1753,
+        "id": 1896,
         "literals": [
           "solidity",
           "^",
@@ -848,7 +959,7 @@
           ".2"
         ],
         "nodeType": "PragmaDirective",
-        "src": "32:23:10"
+        "src": "33:23:10"
       },
       {
         "abstract": false,
@@ -856,115 +967,115 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": true,
-        "id": 1816,
+        "id": 1970,
         "linearizedBaseContracts": [
-          1816
+          1970
         ],
         "name": "ContractStages",
-        "nameLocation": "66:14:10",
+        "nameLocation": "69:14:10",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "ContractStages.ContractManagementStages",
-            "id": 1759,
+            "id": 1902,
             "members": [
               {
-                "id": 1754,
+                "id": 1897,
                 "name": "PartyApprovalPending",
-                "nameLocation": "128:20:10",
+                "nameLocation": "134:20:10",
                 "nodeType": "EnumValue",
-                "src": "128:20:10"
+                "src": "134:20:10"
               },
               {
-                "id": 1755,
+                "id": 1898,
                 "name": "FinalApprovalPending",
-                "nameLocation": "158:20:10",
+                "nameLocation": "165:20:10",
                 "nodeType": "EnumValue",
-                "src": "158:20:10"
+                "src": "165:20:10"
               },
               {
-                "id": 1756,
+                "id": 1899,
                 "name": "Validated",
-                "nameLocation": "188:9:10",
+                "nameLocation": "196:9:10",
                 "nodeType": "EnumValue",
-                "src": "188:9:10"
+                "src": "196:9:10"
               },
               {
-                "id": 1757,
+                "id": 1900,
                 "name": "Expired",
-                "nameLocation": "207:7:10",
+                "nameLocation": "216:7:10",
                 "nodeType": "EnumValue",
-                "src": "207:7:10"
+                "src": "216:7:10"
               },
               {
-                "id": 1758,
+                "id": 1901,
                 "name": "Rejected",
-                "nameLocation": "224:8:10",
+                "nameLocation": "234:8:10",
                 "nodeType": "EnumValue",
-                "src": "224:8:10"
+                "src": "234:8:10"
               }
             ],
             "name": "ContractManagementStages",
-            "nameLocation": "93:24:10",
+            "nameLocation": "98:24:10",
             "nodeType": "EnumDefinition",
-            "src": "88:150:10"
+            "src": "93:156:10"
           },
           {
             "constant": false,
-            "id": 1764,
+            "id": 1907,
             "mutability": "mutable",
             "name": "currentStage",
-            "nameLocation": "278:12:10",
+            "nameLocation": "291:12:10",
             "nodeType": "VariableDeclaration",
-            "scope": 1816,
-            "src": "244:94:10",
+            "scope": 1970,
+            "src": "257:94:10",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+              "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
               "typeString": "enum ContractStages.ContractManagementStages"
             },
             "typeName": {
-              "id": 1761,
+              "id": 1904,
               "nodeType": "UserDefinedTypeName",
               "pathNode": {
-                "id": 1760,
+                "id": 1903,
                 "name": "ContractManagementStages",
                 "nodeType": "IdentifierPath",
-                "referencedDeclaration": 1759,
-                "src": "244:24:10"
+                "referencedDeclaration": 1902,
+                "src": "257:24:10"
               },
-              "referencedDeclaration": 1759,
-              "src": "244:24:10",
+              "referencedDeclaration": 1902,
+              "src": "257:24:10",
               "typeDescriptions": {
-                "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                 "typeString": "enum ContractStages.ContractManagementStages"
               }
             },
             "value": {
               "expression": {
-                "id": 1762,
+                "id": 1905,
                 "name": "ContractManagementStages",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 1759,
-                "src": "293:24:10",
+                "referencedDeclaration": 1902,
+                "src": "306:24:10",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_type$_t_enum$_ContractManagementStages_$1759_$",
+                  "typeIdentifier": "t_type$_t_enum$_ContractManagementStages_$1902_$",
                   "typeString": "type(enum ContractStages.ContractManagementStages)"
                 }
               },
-              "id": 1763,
+              "id": 1906,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
               "lValueRequested": false,
               "memberName": "PartyApprovalPending",
               "nodeType": "MemberAccess",
-              "referencedDeclaration": 1754,
-              "src": "293:45:10",
+              "referencedDeclaration": 1897,
+              "src": "306:45:10",
               "typeDescriptions": {
-                "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                 "typeString": "enum ContractStages.ContractManagementStages"
               }
             },
@@ -972,50 +1083,50 @@
           },
           {
             "body": {
-              "id": 1777,
+              "id": 1920,
               "nodeType": "Block",
-              "src": "410:73:10",
+              "src": "425:75:10",
               "statements": [
                 {
                   "expression": {
                     "arguments": [
                       {
                         "commonType": {
-                          "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                          "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                           "typeString": "enum ContractStages.ContractManagementStages"
                         },
-                        "id": 1773,
+                        "id": 1916,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
-                          "id": 1771,
+                          "id": 1914,
                           "name": "currentStage",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 1764,
-                          "src": "428:12:10",
+                          "referencedDeclaration": 1907,
+                          "src": "444:12:10",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                            "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                             "typeString": "enum ContractStages.ContractManagementStages"
                           }
                         },
                         "nodeType": "BinaryOperation",
                         "operator": "==",
                         "rightExpression": {
-                          "id": 1772,
+                          "id": 1915,
                           "name": "_stage",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 1767,
-                          "src": "444:6:10",
+                          "referencedDeclaration": 1910,
+                          "src": "460:6:10",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                            "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                             "typeString": "enum ContractStages.ContractManagementStages"
                           }
                         },
-                        "src": "428:22:10",
+                        "src": "444:22:10",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
@@ -1023,14 +1134,14 @@
                       },
                       {
                         "hexValue": "4e6f7420696e206578706563746564207374616765",
-                        "id": 1774,
+                        "id": 1917,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "string",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "452:23:10",
+                        "src": "468:23:10",
                         "typeDescriptions": {
                           "typeIdentifier": "t_stringliteral_b694881b59e12a5f97df05318531721af0246c01b8e77c9a0cf2519e627107e8",
                           "typeString": "literal_string \"Not in expected stage\""
@@ -1049,7 +1160,7 @@
                           "typeString": "literal_string \"Not in expected stage\""
                         }
                       ],
-                      "id": 1770,
+                      "id": 1913,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -1057,13 +1168,13 @@
                         4294967278
                       ],
                       "referencedDeclaration": 4294967278,
-                      "src": "420:7:10",
+                      "src": "436:7:10",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 1775,
+                    "id": 1918,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1071,84 +1182,84 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "420:56:10",
+                    "src": "436:56:10",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 1776,
+                  "id": 1919,
                   "nodeType": "ExpressionStatement",
-                  "src": "420:56:10"
+                  "src": "436:56:10"
                 }
               ]
             },
-            "id": 1778,
+            "id": 1921,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "_atStage",
-            "nameLocation": "354:8:10",
+            "nameLocation": "369:8:10",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1768,
+              "id": 1911,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1767,
+                  "id": 1910,
                   "mutability": "mutable",
                   "name": "_stage",
-                  "nameLocation": "388:6:10",
+                  "nameLocation": "403:6:10",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1778,
-                  "src": "363:31:10",
+                  "scope": 1921,
+                  "src": "378:31:10",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                    "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                     "typeString": "enum ContractStages.ContractManagementStages"
                   },
                   "typeName": {
-                    "id": 1766,
+                    "id": 1909,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 1765,
+                      "id": 1908,
                       "name": "ContractManagementStages",
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 1759,
-                      "src": "363:24:10"
+                      "referencedDeclaration": 1902,
+                      "src": "378:24:10"
                     },
-                    "referencedDeclaration": 1759,
-                    "src": "363:24:10",
+                    "referencedDeclaration": 1902,
+                    "src": "378:24:10",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                      "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                       "typeString": "enum ContractStages.ContractManagementStages"
                     }
                   },
                   "visibility": "internal"
                 }
               ],
-              "src": "362:33:10"
+              "src": "377:33:10"
             },
             "returnParameters": {
-              "id": 1769,
+              "id": 1912,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "410:0:10"
+              "src": "425:0:10"
             },
-            "scope": 1816,
-            "src": "345:138:10",
+            "scope": 1970,
+            "src": "360:140:10",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "internal"
           },
           {
             "body": {
-              "id": 1804,
+              "id": 1947,
               "nodeType": "Block",
-              "src": "526:143:10",
+              "src": "539:146:10",
               "statements": [
                 {
                   "expression": {
@@ -1158,7 +1269,7 @@
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
                         },
-                        "id": 1789,
+                        "id": 1932,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -1168,7 +1279,7 @@
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
                           },
-                          "id": 1787,
+                          "id": 1930,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -1176,14 +1287,14 @@
                           "leftExpression": {
                             "arguments": [
                               {
-                                "id": 1784,
+                                "id": 1927,
                                 "name": "currentStage",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 1764,
-                                "src": "549:12:10",
+                                "referencedDeclaration": 1907,
+                                "src": "563:12:10",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                                  "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                                   "typeString": "enum ContractStages.ContractManagementStages"
                                 }
                               }
@@ -1191,30 +1302,30 @@
                             "expression": {
                               "argumentTypes": [
                                 {
-                                  "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                                  "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                                   "typeString": "enum ContractStages.ContractManagementStages"
                                 }
                               ],
-                              "id": 1783,
+                              "id": 1926,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
                               "lValueRequested": false,
                               "nodeType": "ElementaryTypeNameExpression",
-                              "src": "544:4:10",
+                              "src": "558:4:10",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_type$_t_uint256_$",
                                 "typeString": "type(uint256)"
                               },
                               "typeName": {
-                                "id": 1782,
+                                "id": 1925,
                                 "name": "uint",
                                 "nodeType": "ElementaryTypeName",
-                                "src": "544:4:10",
+                                "src": "558:4:10",
                                 "typeDescriptions": {}
                               }
                             },
-                            "id": 1785,
+                            "id": 1928,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -1222,7 +1333,7 @@
                             "lValueRequested": false,
                             "names": [],
                             "nodeType": "FunctionCall",
-                            "src": "544:18:10",
+                            "src": "558:18:10",
                             "tryCall": false,
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -1233,21 +1344,21 @@
                           "operator": "+",
                           "rightExpression": {
                             "hexValue": "31",
-                            "id": 1786,
+                            "id": 1929,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
                             "kind": "number",
                             "lValueRequested": false,
                             "nodeType": "Literal",
-                            "src": "565:1:10",
+                            "src": "579:1:10",
                             "typeDescriptions": {
                               "typeIdentifier": "t_rational_1_by_1",
                               "typeString": "int_const 1"
                             },
                             "value": "1"
                           },
-                          "src": "544:22:10",
+                          "src": "558:22:10",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
@@ -1257,21 +1368,21 @@
                         "operator": "<=",
                         "rightExpression": {
                           "hexValue": "32",
-                          "id": 1788,
+                          "id": 1931,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
                           "kind": "number",
                           "lValueRequested": false,
                           "nodeType": "Literal",
-                          "src": "570:1:10",
+                          "src": "584:1:10",
                           "typeDescriptions": {
                             "typeIdentifier": "t_rational_2_by_1",
                             "typeString": "int_const 2"
                           },
                           "value": "2"
                         },
-                        "src": "544:27:10",
+                        "src": "558:27:10",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
@@ -1279,14 +1390,14 @@
                       },
                       {
                         "hexValue": "496e76616c6964207374616765",
-                        "id": 1790,
+                        "id": 1933,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "string",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "573:15:10",
+                        "src": "587:15:10",
                         "typeDescriptions": {
                           "typeIdentifier": "t_stringliteral_01e84c248d5e8ad5c7056b93377de2b7a705dbd51681b488c1c55d0776e7be7b",
                           "typeString": "literal_string \"Invalid stage\""
@@ -1305,7 +1416,7 @@
                           "typeString": "literal_string \"Invalid stage\""
                         }
                       ],
-                      "id": 1781,
+                      "id": 1924,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -1313,13 +1424,13 @@
                         4294967278
                       ],
                       "referencedDeclaration": 4294967278,
-                      "src": "536:7:10",
+                      "src": "550:7:10",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 1791,
+                    "id": 1934,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1327,33 +1438,33 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "536:53:10",
+                    "src": "550:53:10",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 1792,
+                  "id": 1935,
                   "nodeType": "ExpressionStatement",
-                  "src": "536:53:10"
+                  "src": "550:53:10"
                 },
                 {
                   "expression": {
-                    "id": 1802,
+                    "id": 1945,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 1793,
+                      "id": 1936,
                       "name": "currentStage",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1764,
-                      "src": "599:12:10",
+                      "referencedDeclaration": 1907,
+                      "src": "614:12:10",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                        "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                         "typeString": "enum ContractStages.ContractManagementStages"
                       }
                     },
@@ -1366,7 +1477,7 @@
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
                           },
-                          "id": 1800,
+                          "id": 1943,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -1374,14 +1485,14 @@
                           "leftExpression": {
                             "arguments": [
                               {
-                                "id": 1797,
+                                "id": 1940,
                                 "name": "currentStage",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 1764,
-                                "src": "644:12:10",
+                                "referencedDeclaration": 1907,
+                                "src": "659:12:10",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                                  "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                                   "typeString": "enum ContractStages.ContractManagementStages"
                                 }
                               }
@@ -1389,30 +1500,30 @@
                             "expression": {
                               "argumentTypes": [
                                 {
-                                  "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                                  "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                                   "typeString": "enum ContractStages.ContractManagementStages"
                                 }
                               ],
-                              "id": 1796,
+                              "id": 1939,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
                               "lValueRequested": false,
                               "nodeType": "ElementaryTypeNameExpression",
-                              "src": "639:4:10",
+                              "src": "654:4:10",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_type$_t_uint256_$",
                                 "typeString": "type(uint256)"
                               },
                               "typeName": {
-                                "id": 1795,
+                                "id": 1938,
                                 "name": "uint",
                                 "nodeType": "ElementaryTypeName",
-                                "src": "639:4:10",
+                                "src": "654:4:10",
                                 "typeDescriptions": {}
                               }
                             },
-                            "id": 1798,
+                            "id": 1941,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -1420,7 +1531,7 @@
                             "lValueRequested": false,
                             "names": [],
                             "nodeType": "FunctionCall",
-                            "src": "639:18:10",
+                            "src": "654:18:10",
                             "tryCall": false,
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -1431,21 +1542,21 @@
                           "operator": "+",
                           "rightExpression": {
                             "hexValue": "31",
-                            "id": 1799,
+                            "id": 1942,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
                             "kind": "number",
                             "lValueRequested": false,
                             "nodeType": "Literal",
-                            "src": "660:1:10",
+                            "src": "675:1:10",
                             "typeDescriptions": {
                               "typeIdentifier": "t_rational_1_by_1",
                               "typeString": "int_const 1"
                             },
                             "value": "1"
                           },
-                          "src": "639:22:10",
+                          "src": "654:22:10",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
@@ -1459,18 +1570,18 @@
                             "typeString": "uint256"
                           }
                         ],
-                        "id": 1794,
+                        "id": 1937,
                         "name": "ContractManagementStages",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1759,
-                        "src": "614:24:10",
+                        "referencedDeclaration": 1902,
+                        "src": "629:24:10",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_enum$_ContractManagementStages_$1759_$",
+                          "typeIdentifier": "t_type$_t_enum$_ContractManagementStages_$1902_$",
                           "typeString": "type(enum ContractStages.ContractManagementStages)"
                         }
                       },
-                      "id": 1801,
+                      "id": 1944,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -1478,72 +1589,183 @@
                       "lValueRequested": false,
                       "names": [],
                       "nodeType": "FunctionCall",
-                      "src": "614:48:10",
+                      "src": "629:48:10",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                        "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                         "typeString": "enum ContractStages.ContractManagementStages"
                       }
                     },
-                    "src": "599:63:10",
+                    "src": "614:63:10",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                      "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                       "typeString": "enum ContractStages.ContractManagementStages"
                     }
                   },
-                  "id": 1803,
+                  "id": 1946,
                   "nodeType": "ExpressionStatement",
-                  "src": "599:63:10"
+                  "src": "614:63:10"
                 }
               ]
             },
-            "id": 1805,
+            "id": 1948,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
-            "name": "_jumpToNextStage",
-            "nameLocation": "498:16:10",
+            "name": "_nextStage",
+            "nameLocation": "517:10:10",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1779,
+              "id": 1922,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "514:2:10"
+              "src": "527:2:10"
             },
             "returnParameters": {
-              "id": 1780,
+              "id": 1923,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "526:0:10"
+              "src": "539:0:10"
             },
-            "scope": 1816,
-            "src": "489:180:10",
+            "scope": 1970,
+            "src": "508:177:10",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "internal"
           },
           {
             "body": {
-              "id": 1814,
+              "id": 1958,
               "nodeType": "Block",
-              "src": "709:59:10",
+              "src": "757:40:10",
               "statements": [
                 {
                   "expression": {
-                    "id": 1812,
+                    "id": 1956,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 1808,
+                      "id": 1954,
                       "name": "currentStage",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1764,
-                      "src": "719:12:10",
+                      "referencedDeclaration": 1907,
+                      "src": "768:12:10",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                        "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
+                        "typeString": "enum ContractStages.ContractManagementStages"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 1955,
+                      "name": "_stage",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 1951,
+                      "src": "783:6:10",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
+                        "typeString": "enum ContractStages.ContractManagementStages"
+                      }
+                    },
+                    "src": "768:21:10",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
+                      "typeString": "enum ContractStages.ContractManagementStages"
+                    }
+                  },
+                  "id": 1957,
+                  "nodeType": "ExpressionStatement",
+                  "src": "768:21:10"
+                }
+              ]
+            },
+            "id": 1959,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "_jumpToStage",
+            "nameLocation": "702:12:10",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1952,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1951,
+                  "mutability": "mutable",
+                  "name": "_stage",
+                  "nameLocation": "740:6:10",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1959,
+                  "src": "715:31:10",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
+                    "typeString": "enum ContractStages.ContractManagementStages"
+                  },
+                  "typeName": {
+                    "id": 1950,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 1949,
+                      "name": "ContractManagementStages",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 1902,
+                      "src": "715:24:10"
+                    },
+                    "referencedDeclaration": 1902,
+                    "src": "715:24:10",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
+                      "typeString": "enum ContractStages.ContractManagementStages"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "714:33:10"
+            },
+            "returnParameters": {
+              "id": 1953,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "757:0:10"
+            },
+            "scope": 1970,
+            "src": "693:104:10",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 1968,
+              "nodeType": "Block",
+              "src": "839:61:10",
+              "statements": [
+                {
+                  "expression": {
+                    "id": 1966,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 1962,
+                      "name": "currentStage",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 1907,
+                      "src": "850:12:10",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                         "typeString": "enum ContractStages.ContractManagementStages"
                       }
                     },
@@ -1553,14 +1775,14 @@
                       "arguments": [
                         {
                           "hexValue": "34",
-                          "id": 1810,
+                          "id": 1964,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
                           "kind": "number",
                           "lValueRequested": false,
                           "nodeType": "Literal",
-                          "src": "759:1:10",
+                          "src": "890:1:10",
                           "typeDescriptions": {
                             "typeIdentifier": "t_rational_4_by_1",
                             "typeString": "int_const 4"
@@ -1575,18 +1797,18 @@
                             "typeString": "int_const 4"
                           }
                         ],
-                        "id": 1809,
+                        "id": 1963,
                         "name": "ContractManagementStages",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1759,
-                        "src": "734:24:10",
+                        "referencedDeclaration": 1902,
+                        "src": "865:24:10",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_enum$_ContractManagementStages_$1759_$",
+                          "typeIdentifier": "t_type$_t_enum$_ContractManagementStages_$1902_$",
                           "typeString": "type(enum ContractStages.ContractManagementStages)"
                         }
                       },
-                      "id": 1811,
+                      "id": 1965,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -1594,56 +1816,56 @@
                       "lValueRequested": false,
                       "names": [],
                       "nodeType": "FunctionCall",
-                      "src": "734:27:10",
+                      "src": "865:27:10",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                        "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                         "typeString": "enum ContractStages.ContractManagementStages"
                       }
                     },
-                    "src": "719:42:10",
+                    "src": "850:42:10",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_enum$_ContractManagementStages_$1759",
+                      "typeIdentifier": "t_enum$_ContractManagementStages_$1902",
                       "typeString": "enum ContractStages.ContractManagementStages"
                     }
                   },
-                  "id": 1813,
+                  "id": 1967,
                   "nodeType": "ExpressionStatement",
-                  "src": "719:42:10"
+                  "src": "850:42:10"
                 }
               ]
             },
-            "id": 1815,
+            "id": 1969,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "_goToRejected",
-            "nameLocation": "684:13:10",
+            "nameLocation": "814:13:10",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1806,
+              "id": 1960,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "697:2:10"
+              "src": "827:2:10"
             },
             "returnParameters": {
-              "id": 1807,
+              "id": 1961,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "709:0:10"
+              "src": "839:0:10"
             },
-            "scope": 1816,
-            "src": "675:93:10",
+            "scope": 1970,
+            "src": "805:95:10",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "internal"
           }
         ],
-        "scope": 1817,
-        "src": "57:713:10"
+        "scope": 1971,
+        "src": "60:843:10"
       }
     ],
-    "src": "32:738:10"
+    "src": "33:870:10"
   },
   "compiler": {
     "name": "solc",
@@ -1651,7 +1873,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.5",
-  "updatedAt": "2022-03-07T05:29:54.663Z",
+  "updatedAt": "2022-03-12T09:01:49.131Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

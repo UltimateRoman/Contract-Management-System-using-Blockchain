@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.2;
 
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/proxy/Clones.sol";
 import "./interfaces/IContractInit.sol";
 import "./ContractController.sol";
@@ -24,6 +25,14 @@ contract ContractFactory is IContractInit {
 
     event createdNewDraftContract(uint);    
 
+    function getArraySum(uint[] memory array) private pure returns (uint) {
+        uint arraySum;
+        for (uint i=0; i < array.length; ++i) {
+            arraySum += array[i];
+        }
+        return arraySum;
+    }
+
     function isPartyOf(address _partyAddress, uint _contractId) internal view returns (bool) {
         bool isParty;
         if (contractsList[_contractId].initiatingParty == _partyAddress) {
@@ -43,18 +52,36 @@ contract ContractFactory is IContractInit {
         return contractsList.length;
     }
 
+    function getMyContracts() external view returns (address[] memory) {
+        uint j = 0;
+        for (uint i=0; i < contractsList.length; ++i) {
+            if (isPartyOf(msg.sender, contractsList[i].id)) {
+                j++;
+            }
+        }
+        uint k=0;
+        address[] memory myContracts = new address[](j);
+        for (uint i=0; i < contractsList.length; ++i) {
+            if (isPartyOf(msg.sender, contractsList[i].id)) {
+                myContracts[k] = contractsList[i].contractAddress;
+                k++;
+            }
+        }
+        return myContracts;
+    }
+
     function initiateContract(
         CompleteContractData calldata _contractData
     ) 
         external 
     {
-        address[] memory partyAddresses = new address[](_contractData.parties.length);
-        for (uint8 i=0; i<partyAddresses.length; ++i) {
-            partyAddresses[i] = _contractData.parties[i];
-        }
         address newContract = Clones.clone(baseContract);
-        contractsList.push(BaseContractData(contractsList.length, newContract, msg.sender, partyAddresses));
+        contractsList.push(BaseContractData(contractsList.length, newContract, msg.sender, _contractData.parties));
         ContractController(newContract).initialize(_contractData, daiTokenAddress);
+        if (_contractData.isPayable) {
+            bool success = IERC20(daiTokenAddress).transferFrom(msg.sender, newContract, getArraySum(_contractData.fundDistribution));
+            require(success, "DAI transfer failed");
+        }
         emit createdNewDraftContract(contractsList.length-1);
     }
 }
